@@ -7,11 +7,13 @@ import Controller.Controller;
 import Model.Daw;
 import Model.DawInOut;
 
+import DataBase.DBsamples;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.concurrent.Flow;
+import java.sql.SQLException;
 
 public class DawView extends JFrame {
 
@@ -24,7 +26,7 @@ public class DawView extends JFrame {
     private JFileChooser fileChooser = new JFileChooser();
     private Controller controller;
     private JButton filterButton = new JButton("Параметр поиска");
-    
+
     JTextField nameSample = new JTextField();
     JTextField typeSample = new JTextField();
 
@@ -51,7 +53,10 @@ public class DawView extends JFrame {
     JTextField tailLengthHat = new JTextField(15);
     JTextField closedHat = new JTextField(15);
 
-    public DawView() {
+    public DawView() throws ClassNotFoundException, SQLException {
+        DBsamples.connectionDB();
+        DBsamples.createTables();
+
         this.daw = new Daw();
         this.inOut = new DawInOut();
         this.myTableModel = new MyTable(this.daw);
@@ -70,32 +75,6 @@ public class DawView extends JFrame {
         JLabel searchLabel = new JLabel(" Поиск: ");
         JTextField searchField = new JTextField(15);
 
-        // searchField.getDocument().addDocumentListener(new
-        // javax.swing.event.DocumentListener() {
-        // @Override
-        // public void insertUpdate(javax.swing.event.DocumentEvent e) {
-        // applyFilter();
-        // }
-
-        // @Override
-        // public void removeUpdate(javax.swing.event.DocumentEvent e) {
-        // applyFilter();
-        // }
-
-        // @Override
-        // public void changedUpdate(javax.swing.event.DocumentEvent e) {
-        // applyFilter();
-        // }
-
-        // private void applyFilter() {
-        // String text = searchField.getText();
-        // if (text.trim().length() == 0) {
-        // sorter.setRowFilter(null);
-        // } else {
-        // sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, rowIndex));
-        // }
-        // }
-        // });
         searchListener = new SearchListener(table, sorter, searchField, rowIndex);
         searchField.getDocument().addDocumentListener(searchListener);
 

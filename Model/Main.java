@@ -1,10 +1,10 @@
 package Model;
-import javax.swing.text.View;
+import java.sql.SQLException;
 
 import View.DawView;
 
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
         DawView view = new DawView();
     }
 }
