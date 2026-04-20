@@ -18,7 +18,7 @@ public class DBsamples {
     connection = null;
     Class.forName("org.postgresql.Driver");
     connection = DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/daw_samples",
+        "jdbc:postgresql://localhost:5432/daw",
         "mihailvasilev",
         "095147");
     System.out.println("База данных подключена!");
@@ -169,28 +169,28 @@ public class DBsamples {
     return samples;
   }
 
-  public static void deleteKickById(int id) throws SQLException {
-    String sql = "DELETE FROM kicks WHERE id = ?";
+  public static void deleteKickByName(String name) throws SQLException {
+    String sql = "DELETE FROM kicks WHERE name = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setInt(1, id);
+      pstmt.setString(1, name);
       int rows = pstmt.executeUpdate();
       System.out.println(rows > 0 ? "Kick удалён." : "Kick не найден.");
     }
   }
 
-  public static void deleteSnareById(int id) throws SQLException {
-    String sql = "DELETE FROM snares WHERE id = ?";
+  public static void deleteSnareByName(String name) throws SQLException {
+    String sql = "DELETE FROM snares WHERE name = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setInt(1, id);
+      pstmt.setString(1, name);
       int rows = pstmt.executeUpdate();
       System.out.println(rows > 0 ? "Snare удалён." : "Snare не найден.");
     }
   }
 
-  public static void deleteHatById(int id) throws SQLException {
-    String sql = "DELETE FROM hats WHERE id = ?";
+  public static void deleteHatByName(String name) throws SQLException {
+    String sql = "DELETE FROM hats WHERE name = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setInt(1, id);
+      pstmt.setString(1, name);
       int rows = pstmt.executeUpdate();
       System.out.println(rows > 0 ? "Hat удалён." : "Hat не найден.");
     }

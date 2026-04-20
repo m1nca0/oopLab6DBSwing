@@ -6,7 +6,7 @@ import javax.swing.table.TableRowSorter;
 import Controller.Controller;
 import Model.Daw;
 import Model.DawInOut;
-
+import Model.Sample;
 import DataBase.DBsamples;
 
 import java.awt.*;
@@ -110,7 +110,11 @@ public class DawView extends JFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showDeleteMenu();
+                try {
+                    showDeleteMenu();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -320,7 +324,7 @@ public class DawView extends JFrame {
         return typeSample.getText().trim();
     }
 
-    private void showDeleteMenu() {
+    private void showDeleteMenu() throws SQLException {
         JPanel deletePanel = new JPanel(new GridLayout(2, 2, 5, 5));
         deletePanel.add(new JLabel("Название:"));
         deletePanel.add(nameSample);

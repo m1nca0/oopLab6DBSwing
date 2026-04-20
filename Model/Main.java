@@ -1,6 +1,8 @@
 package Model;
 import java.sql.SQLException;
 
+import javax.swing.text.View;
+
 import View.DawView;
 
 public class Main{
