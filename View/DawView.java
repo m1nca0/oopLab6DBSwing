@@ -68,8 +68,7 @@ public class DawView extends JFrame {
         table.setRowSorter(sorter);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        JButton openButton = new JButton("Открыть");
-        JButton saveButton = new JButton("Сохранить");
+        JButton openButton = new JButton("Создать поля по умолчанию");
         JButton addButton = new JButton("Добавить");
         JButton deleteButton = new JButton("Удалить");
         JLabel searchLabel = new JLabel(" Поиск: ");
@@ -85,8 +84,6 @@ public class DawView extends JFrame {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(true);
         toolBar.add(openButton);
-        toolBar.addSeparator();
-        toolBar.add(saveButton);
         toolBar.addSeparator();
         toolBar.add(addButton);
         toolBar.addSeparator();
@@ -128,42 +125,20 @@ public class DawView extends JFrame {
         openButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showFileList();
-            }
-        });
-
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveProjectToFile();
+                try {
+                    makeDefSamplesDB();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
         setVisible(true);
     }
 
-    private void saveProjectToFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Сохранить проект");
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            java.io.File fileToSave = fileChooser.getSelectedFile();
-            String way = fileToSave.getAbsolutePath();
-
-            controller.saveProjectToFile(way);
-        }
-    }
-
-    private void showFileList() {
-        int response = fileChooser.showOpenDialog(null);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            this.daw = controller.showFileList(file.getAbsolutePath());
-            myTableModel.setDaw(this.daw);
-            myTableModel.fireTableDataChanged();
-        }
+    private void makeDefSamplesDB() throws SQLException {
+        controller.makeDefSamplesDB();
+        myTableModel.fireTableDataChanged();
     }
 
     private void showFilterMenu(JButton button) {

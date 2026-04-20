@@ -113,16 +113,6 @@ public class DBsamples {
     }
   }
 
-  public static void insertSample(Sample sample) throws SQLException {
-    if (sample instanceof Kick) {
-      insertKick((Kick) sample);
-    } else if (sample instanceof Snare) {
-      insertSnare((Snare) sample);
-    } else {
-      insertHat((Hat) sample);
-    }
-  }
-
   public static List<Sample> loadAllSamples() throws SQLException {
     List<Sample> samples = new ArrayList<>();
     statement = connection.createStatement();

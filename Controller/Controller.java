@@ -23,7 +23,7 @@ public class Controller {
         this.daw = dawContr;
         List<Sample> savedSamples = DBsamples.loadAllSamples();
         for (Sample s : savedSamples) {
-            daw.CreateSample(s);
+            this.daw.CreateSample(s);
         }
     }
 
@@ -34,9 +34,12 @@ public class Controller {
         inOut.saveProject(daw, way);
     }
 
-    public Daw showFileList(String way) {
-        this.daw = inOut.loadProject(way);
-        return this.daw;
+    public void makeDefSamplesDB() throws SQLException {
+        DBsamples.writeDefaultSamples();
+        List<Sample> savedSamples = DBsamples.loadAllSamples();
+        for (Sample s : savedSamples) {
+            this.daw.CreateSample(s);
+        }
     }
 
     public void showDeleteMenu(String name, String type) throws SQLException {
